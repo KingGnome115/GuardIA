@@ -1,15 +1,44 @@
 from tkinter import *
+from io import open
 import Metodos
+import json 
+
+class Usuario:
+    def to_JSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+
+def guardar_json(usuarios):
+    with open('usuarios.json', 'w') as archivo:
+        json.dump(usuarios, archivo, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+
+def leer_json():
+    try:
+        with open('usuarios.json', 'r') as archivo:
+            usuarios = json.load(archivo)
+            return usuarios
+    except:
+        return []
 
 def IniciarC():
     nombre = cuadroNombre.get()
+    constrasena = cuadroContrasena.get()
     mensaje = "Dejame recordar tu bello rostro " + nombre
     etiquetaMensaje = Label(raiz, text=mensaje, fg="#F2F2F2", bg="#0E4D40")
     etiquetaMensaje.place(x=65, y=200)
 
-    #Metodos.Captura(nombre.get())
-    #Metodos.Entrenador()
-
+    Usua = Usuario()
+    Usua.nombre = nombre
+    Usua.contrasena = constrasena
+    usuarios = leer_json()
+    if usuarios.__len__() < 3:
+        usuarios.append(Usua)
+        guardar_json(usuarios)
+        Metodos.Captura(nombre)
+        Metodos.Entrenador()
+    else:
+        mensaje = "No soy tan fuerte para proteger a tantos :c"
+        etiquetaMensaje.configure(text=mensaje)
+    
 
 raiz = Tk()
 raiz.title("GuardIA Nuevo Usuario")
