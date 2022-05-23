@@ -1,3 +1,4 @@
+from multiprocessing.connection import wait
 from tkinter import *
 from io import open
 import Metodos
