@@ -21,7 +21,6 @@ def Captura(pnombre):
     cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
     faceClassif = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
     count = 0
-    MessageBox.showinfo("Captura de Rostros", "Sonrie para recordar tu hermoso rostro (Click en continuar)")
     while True:
         ret, frame = cap.read()
         if ret == False: break
