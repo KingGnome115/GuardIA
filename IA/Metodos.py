@@ -52,7 +52,8 @@ def Entrenador():
     label = 0
 
     if peopleList == []:
-        print('No hay datos')
+        from os import remove
+        remove('modeloEigenFace.xml')
         return
 
     for nameDir in peopleList:

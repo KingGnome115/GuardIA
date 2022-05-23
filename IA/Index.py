@@ -14,23 +14,13 @@ def Recon():
         raiz.title("GuardIA")
         botonReco.configure(image=imagenPlay, bg="#0E4D40")
 
-def Agregar_worker():
+def NuevoUsuario():
     import AgregarU
     AgregarU.AgregarU()
 
-def check_if_done(t):
-    if not t.is_alive():
-        return False
-    else:
-        return True
-
-def schedule(t):
-    raiz.after(1000, check_if_done, t)
-
-def NuevoUsuario():
-    t = threading.Thread(target=Agregar_worker)
-    t.start()
-    schedule(t)
+def QuitarUsuario():
+    import QuitarU
+    QuitarU.QuitarU()
 
 #Venatana Principal
 raiz = Tk()
@@ -53,7 +43,7 @@ botonAgregar.place(x=20, y=20)
 imagenQuitar = PhotoImage(file="./Iconos/Quitar.png")
 imagenQuitar = imagenQuitar.subsample(2,2)
 
-botonQuitar = Button(miFrame, image=imagenQuitar, width=65, height=65, bg="#0E4D40", borderwidth=0)
+botonQuitar = Button(miFrame, image=imagenQuitar, width=65, height=65, bg="#0E4D40", borderwidth=0, command = QuitarUsuario)
 botonQuitar.place(x=110, y=20)
 
 #Boton para iniciar el reconocimiento
