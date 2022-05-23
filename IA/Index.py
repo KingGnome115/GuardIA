@@ -1,9 +1,6 @@
 from tkinter import *
+import threading
 import Metodos
-
-#Metodos.Captura("Kevin")
-#Metodos.Entrenador()
-#Metodos.Reconocer()
 
 click = False
 
@@ -16,6 +13,24 @@ def Recon():
     else:
         raiz.title("GuardIA")
         botonReco.configure(image=imagenPlay, bg="#0E4D40")
+
+def Agregar_worker():
+    import AgregarU
+    AgregarU.AgregarU()
+
+def check_if_done(t):
+    if not t.is_alive():
+        return False
+    else:
+        return True
+
+def schedule(t):
+    raiz.after(1000, check_if_done, t)
+
+def NuevoUsuario():
+    t = threading.Thread(target=Agregar_worker)
+    t.start()
+    schedule(t)
 
 #Venatana Principal
 raiz = Tk()
@@ -31,7 +46,7 @@ miFrame.pack()
 imagenAgregar = PhotoImage(file="./Iconos/Agregar.png")
 imagenAgregar = imagenAgregar.subsample(2,2)
 
-botonAgregar = Button(miFrame, image=imagenAgregar, width=65, height=65, bg="#0E4D40", borderwidth=0)
+botonAgregar = Button(miFrame, image=imagenAgregar, width=65, height=65, bg="#0E4D40", borderwidth=0, command = NuevoUsuario)
 botonAgregar.place(x=20, y=20)
 
 #Boton para eliminar un usuario

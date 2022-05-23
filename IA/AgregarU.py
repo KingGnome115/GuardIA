@@ -1,6 +1,7 @@
 from multiprocessing.connection import wait
 from tkinter import *
 from io import open
+from functools import partial
 import Metodos
 import json 
 
@@ -20,7 +21,7 @@ def leer_json():
     except:
         return []
 
-def IniciarC():
+def IniciarC(raiz, cuadroNombre, cuadroContrasena):
     nombre = cuadroNombre.get()
     constrasena = cuadroContrasena.get()
     mensaje = "Dejame recordar tu bello rostro " + nombre
@@ -36,34 +37,37 @@ def IniciarC():
         guardar_json(usuarios)
         Metodos.Captura(nombre)
         Metodos.Entrenador()
+        raiz.destroy()
     else:
         mensaje = "No soy tan fuerte para proteger a tantos :c"
         etiquetaMensaje.configure(text=mensaje)
     
 
-raiz = Tk()
-raiz.title("GuardIA Nuevo Usuario")
-raiz.resizable(0,0)
-raiz.iconbitmap("./Iconos/icono.ico")
+#Metodo para llamar esta ventana
+def AgregarU():
+    raiz = Tk()
+    raiz.title("GuardIA Nuevo Usuario")
+    raiz.resizable(0,0)
+    raiz.iconbitmap("./Iconos/icono.ico")
 
-miFrame = Frame(raiz, width = 350, height = 350)
-miFrame.config(bg="#0E4D40")
-miFrame.pack()
+    miFrame = Frame(raiz, width = 350, height = 350)
+    miFrame.config(bg="#0E4D40")
+    miFrame.pack()
 
-etiquetaNombre = Label(miFrame, text="Nombre: ", bg="#0E4D40", fg="white")
-etiquetaNombre.place(x=70, y=20)
+    etiquetaNombre = Label(miFrame, text="Nombre: ", bg="#0E4D40", fg="white")
+    etiquetaNombre.place(x=70, y=20)
 
-cuadroNombre = Entry(miFrame, width=30)
-cuadroNombre.place(x=75, y=50)
+    cuadroNombre = Entry(miFrame, width=30)
+    cuadroNombre.place(x=75, y=50)
 
-etiquetaContrasena = Label(miFrame, text="Contraseña: ", bg="#0E4D40", fg="white")
-etiquetaContrasena.place(x=70, y=80)
+    etiquetaContrasena = Label(miFrame, text="Contraseña: ", bg="#0E4D40", fg="white")
+    etiquetaContrasena.place(x=70, y=80)
 
-cuadroContrasena = Entry(miFrame, width=30)
-cuadroContrasena.config(show="*")
-cuadroContrasena.place(x=75, y=110)
+    cuadroContrasena = Entry(miFrame, width=30)
+    cuadroContrasena.config(show="*")
+    cuadroContrasena.place(x=75, y=110)
 
-botonIniciar = Button(miFrame, text="Iniciar", width=10, height=1, bg="#0E4D40", fg="white", command=IniciarC)
-botonIniciar.place(x=75, y=150)
+    botonIniciar = Button(miFrame, text="Iniciar", width=10, height=1, bg="#0E4D40", fg="white", command=partial(IniciarC, raiz, cuadroNombre, cuadroContrasena))
+    botonIniciar.place(x=75, y=150)
 
-raiz.mainloop()
+    raiz.mainloop()

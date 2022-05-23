@@ -51,6 +51,10 @@ def Entrenador():
     faceData = []
     label = 0
 
+    if peopleList == []:
+        print('No hay datos')
+        return
+
     for nameDir in peopleList:
         personPath = dataPath + '/' + nameDir
         for fileName in os.listdir(personPath):
