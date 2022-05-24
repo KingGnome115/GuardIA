@@ -121,5 +121,3 @@ def Reconocer():
                 break
         #print("Te veo: ", Persona)
         #print("Tiempo desconocido: ", tiempoD)
-
-Reconocer()
