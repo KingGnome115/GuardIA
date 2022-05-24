@@ -1,4 +1,5 @@
 from tkinter import *
+from threading import *
 import threading
 import Metodos
 
@@ -10,9 +11,21 @@ def Recon():
     if click:
         raiz.title("GuardIA Observando")
         botonReco.configure(image=imagenPause, bg="#0E4D40")
+        Metodos.Reconocer()
     else:
         raiz.title("GuardIA")
         botonReco.configure(image=imagenPlay, bg="#0E4D40")
+
+def Reconocimiento_check(t):
+    raiz.after(1000, check_done, t)
+
+def check_done(t):
+    if t.is_alive():
+        Reconocimiento_check(t)
+
+def Vigilar():
+    t = threading.Thread(target=Recon)
+    t.start()
 
 def NuevoUsuario():
     import AgregarU
@@ -53,7 +66,7 @@ imagenPlay = imagenPlay.subsample(2,2)
 imagenPause = PhotoImage(file="./Iconos/Pause.png")
 imagenPause = imagenPause.subsample(2,2)
 
-botonReco = Button(miFrame, image=imagenPlay, width=65, height=65, bg="#0E4D40", borderwidth=0, command=Recon)
+botonReco = Button(miFrame, image=imagenPlay, width=65, height=65, bg="#0E4D40", borderwidth=0, command=Vigilar)
 botonReco.place(x=200, y=20)
 
 
