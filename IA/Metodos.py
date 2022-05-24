@@ -66,7 +66,7 @@ def Entrenador():
     face_recognizer.train(faceData, np.array(labels))
     face_recognizer.write('modeloEigenFace.xml')
 
-def Reconocer():
+def Reconocer(seguir):
     dataPath = './fotografias'
     peopleList = os.listdir(dataPath)
 
@@ -84,7 +84,7 @@ def Reconocer():
     tiempoD = 0
     tiempo_maxD = 50
 
-    while True:
+    while seguir:
         ret, frame = cap.read()
         if ret == False: break
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
