@@ -66,7 +66,7 @@ def Entrenador():
     face_recognizer.train(faceData, np.array(labels))
     face_recognizer.write('modeloEigenFace.xml')
 
-def Reconocer(seguir):
+def Reconocer():
     dataPath = './fotografias'
     peopleList = os.listdir(dataPath)
 
@@ -84,14 +84,14 @@ def Reconocer(seguir):
     tiempoD = 0
     tiempo_maxD = 50
 
-    while seguir:
+    while True:
         ret, frame = cap.read()
         if ret == False: break
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         auxFrame = gray.copy()
         faces = faceClassif.detectMultiScale(gray, 1.3,5)
 
-        if len(faces) == 0:
+        if len(faces) == 0 and not teveoC:
             teveoC = False
             tiempo = tiempo + 1
             if tiempo >= tiempo_max:

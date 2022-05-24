@@ -11,11 +11,10 @@ def Recon():
     if click:
         raiz.title("GuardIA Observando")
         botonReco.configure(image=imagenPause, bg="#0E4D40")
-        Metodos.Reconocer(True)
+        Metodos.Reconocer()
     else:
         raiz.title("GuardIA")
         botonReco.configure(image=imagenPlay, bg="#0E4D40")
-        Metodos.Reconocer(False)
 
 def Reconocimiento_check(t):
     raiz.after(1000, check_done, t)
