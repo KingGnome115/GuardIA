@@ -79,10 +79,10 @@ def Reconocer():
     Persona = 'Desconocido'
 
     tiempo = 0
-    tiempo_max = 150
+    tiempo_max = 100
 
     tiempoD = 0
-    tiempo_maxD = 50
+    tiempo_maxD = 100
 
     while True:
         ret, frame = cap.read()
@@ -90,16 +90,18 @@ def Reconocer():
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         auxFrame = gray.copy()
         faces = faceClassif.detectMultiScale(gray, 1.3,5)
-
-        if len(faces) == 0 and not teveoC:
-            teveoC = False
-            tiempo = tiempo + 1
+        print(len(faces))
+        if len(faces) == 0 :
+            print('No hay caras')
+            tiempo += 1
+            print("Tiempo :", tiempo)
             if tiempo >= tiempo_max:
                 user32=windll.LoadLibrary('user32.dll')
                 user32.LockWorkStation()
                 break
-            else:
-                print('No hay cara')
+        else:
+            tiempo = 0
+                #print('Hay caras')
         
         for (x,y,w,h) in faces:
             rostro = auxFrame[y:y+h,x:x+w]
@@ -109,22 +111,15 @@ def Reconocer():
             ...
 
             if result[1] < 5700: 
-                cv2.putText(frame,'{}'.format(peopleList[result[0]]),(x,y-25),2,1.1,(0,255,0),1,cv2.LINE_AA)
-                cv2.rectangle(frame, (x,y) ,(x+w, y+h), (0,0,255), 2)
-
-                TeveoC = True
                 Persona = peopleList[result[0]]
                 tiempoD = 0
             else:
-                cv2.putText(frame,'Desconocido', (x, y-20), 2,0.8,(0,0,255), 1, cv2.LINE_AA)
-                #v2.rectangle(frame, (x,y) ,(x+w, y+h), (0,0,255), 2)
-
-                TeveoC = False
                 Persona = 'Desconocido'
                 tiempoD+=1
             #print('Tiempo desconocido: ', tiempo)
-            if tiempoD < tiempo_maxD:
+            if tiempoD > tiempo_maxD:
                 break
-        #cv2.imshow('Video', frame)
-        print("Te veo: ", Persona)
-        print("Tiempo desconocido: ", tiempoD)
+        #print("Te veo: ", Persona)
+        #print("Tiempo desconocido: ", tiempoD)
+
+Reconocer()
